@@ -1,0 +1,80 @@
+<div class="form-popup">
+	<div class="form-popup__wr">
+		<div class="form-popup__title">Заказать звонок</div>
+		<form id="form_1" action="" method="post" class="form footer__form">
+			<div class="form-item">
+				<input type="text" name="form[NAME]" placeholder="Ваше имя">
+			</div>
+			<div class="form-item">
+				<input type="text" name="form[PHONE]" class="mask" placeholder="+7 (___) - ___ - __ - __">
+			</div>
+			<input type="submit" onclick="javascript:$('#webform-form-c25bc379be635e9548849986a0bc24cfd53ee237').submit();return false;" class="btn form-btn " value="Заказать">
+		</form>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="popup-form">
+			<div class="popup-form__title">
+			Оставьте свои данные, и наш менеджер расскажет вам об объектах:
+		</div>
+		<div class="custom-popup-close"></div>
+		<form id="webform-form-c25bc379be635e9548849986a0bc24cfd53ee237" class="b_form" action="/ajax/form-callme.php" enctype="multipart/form-data" method="post">
+			<div class="form-item ">
+				<label>Ваше имя</label>
+				<input type="text" name="form[NAME]" class="" value="">
+			</div>
+			<div class="form-item ">
+				<label>Ваш телефон</label>
+				<input class="mask" type="text" name="form[PHONE]" class="" value="">
+			</div>
+
+			<div class="form-item form-item--check ">
+				<label>
+					<input type="checkbox" value="Y" name="user_consent" checked="checked">
+					<span class="checkbox-custom"></span>
+					<span>Нажимая кнопку «Жду звонка», вы соглашаетесь с <a href="/security-policy/">условиями обработки личных данных</a></span>
+				</label>
+			</div>
+			<input name="popup" type="hidden" value="Y" />
+			<input name="title" type="hidden" value="Форма обратной связи" />
+			<input name="data[goal]" type="hidden" value="form_callback_menu_submit" />
+			<input name="data[event]" type="hidden" value="form_submit" />
+			<input name="data[page_title]" type="hidden" value="menu" />
+			<input name="data[form_type]" type="hidden" value="callback_menu" />
+			<input type="hidden" name="hash" value="c25bc379be635e9548849986a0bc24cfd53ee237">
+			<button type="submit" onclick="javascript:$('#webform-form-c25bc379be635e9548849986a0bc24cfd53ee237').submit();return false;">Жду звонка</button>
+		</form>
+		<script>
+			(function($){
+				$(".form-item input").focus(function(){
+					$(this).closest(".form-item").addClass("form-item--active")
+				})
+				$(".form-item input").blur(function(){
+					$(this).closest(".form-item").removeClass("form-item--active")
+				})
+				$(".popup-form .mask").inputmask("+7 (999) 999-99-99");
+				$("#webform-form-c25bc379be635e9548849986a0bc24cfd53ee237").submit(function() {
+				//sendEvent("order-start", "order");
+					$(this).append('<input type="hidden" name="submit" value="Y">');
+					$(this).ajaxSubmit({
+						url: "ajax/form-callme.php",
+						complete: function(xhr) {
+							var data = {data:xhr.responseText};
+							data = '<div>'+data.data+'</div>';
+							data = $(data).find('.popup-form').html();
+							$("#webform-form-c25bc379be635e9548849986a0bc24cfd53ee237").closest('.popup-form').html(data);
+						}
+					});
+					return false;
+				});	
+			})(jQuery);
+		</script>
+	</div>
